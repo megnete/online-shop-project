@@ -1,26 +1,30 @@
 const path = require("path");
-
 const express = require("express");
 
-const authRoutes = require("./routes/auth.routes");
-
 const db = require("./data/database");
+const authController = require("./controllers/auth.controller");
 
 const app = express();
 
-app.set("view engine", "ejs");
+/* ---------- middleware ---------- */
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, "public")));
 
+app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-app.use(express.static("public"));
+/* ---------- routes ---------- */
+app.get("/signup", authController.getSignup);
+app.post("/signup", authController.signup);
+app.get("/login", authController.getLogin);
 
-app.use(authRoutes);
-
-db.connectToDatabase().then(function() {
+/* ---------- start server AFTER DB connects ---------- */
+db.connectToDatabase()
+  .then(() => {
+    console.log("✅ MongoDB connected");
     app.listen(3000);
-}).catch(function(error) {
-    console.log("Failed to connect to the database!");
-    console.log(error);
-});
-
-app.listen(3000);
+  })
+  .catch((err) => {
+    console.error("❌ MongoDB connection failed");
+    console.error(err);
+  });
