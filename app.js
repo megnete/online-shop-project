@@ -7,6 +7,10 @@ const authController = require("./controllers/auth.controller");
 const handleError = require("./middlewares/error-handler");
 const app = express();
 const csrf = require('csurf');
+const expressSession = require("express-session");
+const authRoutes = require("./routes/auth.routes");
+const productsRoutes = require("./routes/products.routes");
+const baseRoutes = require("./routes/base.routes");
 
 /* ---------- middleware ---------- */
 app.use(express.urlencoded({ extended: false }));
@@ -15,7 +19,15 @@ app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+const createSessionConfig = require("./config/session");
+
+const sessionConfig = createSessionConfig();
+app.use(expressSession(sessionConfig));
 app.use(csrf());
+
+app.use(authRoutes);
+app.use(productsRoutes);
+app.use(baseRoutes);  
 
 app.use(addCsrfToken);
 
