@@ -9,6 +9,7 @@ const app = express();
 const csrf = require('csurf');
 const expressSession = require("express-session");
 const authRoutes = require("./routes/auth.routes");
+const checkAuth = require("./middlewares/check-auth");
 const productsRoutes = require("./routes/products.routes");
 const baseRoutes = require("./routes/base.routes");
 
@@ -30,6 +31,7 @@ app.use(productsRoutes);
 app.use(baseRoutes);  
 
 app.use(addCsrfToken);
+app.use(checkAuth);
 
 app.use(handleError);
 /* ---------- routes ---------- */
