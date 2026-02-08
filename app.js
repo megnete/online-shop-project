@@ -26,13 +26,14 @@ const sessionConfig = createSessionConfig();
 app.use(expressSession(sessionConfig));
 app.use(csrf());
 
+app.use(addCsrfToken);
+app.use(checkAuth);
+
 app.use(authRoutes);
 app.use(productsRoutes);
 app.use(baseRoutes);  
 
-app.use(addCsrfToken);
-app.use(checkAuth);
-
+/* ---------- error handling ---------- */
 app.use(handleError);
 /* ---------- routes ---------- */
 app.get("/signup", authController.getSignup);

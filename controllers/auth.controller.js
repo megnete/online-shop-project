@@ -22,7 +22,7 @@ function getSignup(req, res) {
 async function signup(req, res, next) {
   const enteredData = {
     email: req.body.email,
-    confirmEmail: req.body["confirm-email"],
+    confirmEmail: req.body.confirmEmail,
     password: req.body.password,
     fullname: req.body.fullname,
     street: req.body.street,
@@ -39,7 +39,7 @@ async function signup(req, res, next) {
       req.body.postal,
       req.body.city,
     ) ||
-    !validation.emailIsConfirmed(req.body.email, req.body["confirm-email"])
+    !validation.emailIsConfirmed(req.body.email, req.body.confirmEmail)
   ) {
     sessionFlash.flashDataToSession(
       req,
