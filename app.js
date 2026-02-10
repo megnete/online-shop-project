@@ -12,6 +12,7 @@ const authRoutes = require("./routes/auth.routes");
 const checkAuth = require("./middlewares/check-auth");
 const productsRoutes = require("./routes/products.routes");
 const baseRoutes = require("./routes/base.routes");
+const adminRoutes = require("./routes/admin.routes")
 
 /* ---------- middleware ---------- */
 app.use(express.urlencoded({ extended: false }));
@@ -32,6 +33,7 @@ app.use(checkAuth);
 app.use(authRoutes);
 app.use(productsRoutes);
 app.use(baseRoutes);  
+app.use("/admin", adminRoutes);
 
 /* ---------- error handling ---------- */
 app.use(handleError);
