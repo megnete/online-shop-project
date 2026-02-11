@@ -7,7 +7,9 @@ function getNewProductForm(req, res) {
 }
 
 function createNewProduct(req, res) {
-  // Implementation for creating a new product would go here
+  console.log(req.body);
+  console.log(req.file);
+  
   res.redirect("/admin/products");
 }
 
