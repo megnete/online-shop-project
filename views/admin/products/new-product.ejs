@@ -1,7 +1,6 @@
 <%- include("../../shared/includes/head.ejs", { pageTitle: "Add new products" }) %>
 <link rel="stylesheet" href="/styles/forms.css">
 <link rel="stylesheet" href="/styles/auth.css">
-</head>
 <body>
   <%- include("../../shared/includes/header.ejs") %>
 
@@ -14,7 +13,7 @@
        </p>
         <p>
         <label for="image">Image</label>
-        <input type="text" id="image" name="image" accept="image/png,image/jpg" />
+        <input type="file" id="image" name="image" accept="image/png,image/jpg" />
        </p>
        <p>
         <label for="summary">Summary</label>
@@ -28,8 +27,9 @@
         <label for="description">Description</label>
         <textarea id="description" name="description" rows="7" required></textarea>
        </p>
-         <button type="reset" class="btn btn-alt">Add Product</button>
-        <button type="submit" class="btn">Reset</button>
+        <button type="submit" class="btn">Add Product</button>
+<button type="reset" class="btn btn-alt">Reset</button>
+
        </form>
  </main>
 <%- include("../../shared/includes/footer.ejs") %>
