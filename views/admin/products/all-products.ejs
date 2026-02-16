@@ -11,8 +11,17 @@
             <h2>Manage Products</h2>
         </section>
         <p><a href="/admin/products/new" class="btn">Add products</a> </p>
-        <section><p>Here are all the products in our store.</p></section>
-        <h1>All Products (Admin) </h1>
-        
+        <section>
+          <p>Here are all the products in our store.</p>
+        </section>
+       <section>
+        <ul>
+          <% for (const product of products) { %>
+          <li>
+            <%- include("./includes/product-items", { product: product }) %>  
+          </li>
+          <% } %>
+        </ul>
+       </section>
  </main>
 <%- include("../../shared/includes/footer.ejs") %>
