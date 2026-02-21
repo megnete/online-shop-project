@@ -1,4 +1,5 @@
 const Product = require("../models/product.model");
+const { get } = require("../routes/admin.routes");
 
 
 async function getProducts(req, res,next) {
@@ -24,8 +25,22 @@ async function createNewProduct(req, res) {
   res.redirect("/admin/products");
 }
 
+function getUpdateProduct(req, res,) {
+  try{
+const product = Product.findById(req.params.id);
+res.render("admin/products/update-product", { product: product });
+  }catch(error){
+    next(error);
+  }
+  
+}
+
+function updateProduct(){}
+
 module.exports = {
     getProducts,
     getNewProductForm,
-    createNewProduct
+    createNewProduct,
+    getUpdateProduct,
+    updateProduct
 };

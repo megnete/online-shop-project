@@ -1,0 +1,11 @@
+<%- include("../../shared/includes/head.ejs", { pageTitle: "Update Product" }) %>
+<link rel="stylesheet" href="/styles/forms.css">
+<link rel="stylesheet" href="/styles/auth.css">
+<body>
+  <%- include("../../shared/includes/header.ejs") %>
+
+    <main>
+       <h1>Update Product</h1>
+      <%- include("./includes/product-form.ejs", { submitPath: "/admin/products/" + product.id, product: product }) %>
+ </main>
+<%- include("../../shared/includes/footer.ejs") %>

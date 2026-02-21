@@ -10,4 +10,8 @@ router.get('/products/new', adminController.getNewProductForm);
 
 router.post('/products', imageUploadMiddleware, adminController.createNewProduct);
 
+router.get('/products/:id', adminController.getUpdateProductForm);
+
+router.post('/products/:id', adminController.updateProduct);
+
 module.exports = router;
