@@ -1,11 +1,12 @@
 <%- include("../../shared/includes/head.ejs", { pageTitle: "Add new products" }) %>
 <link rel="stylesheet" href="/styles/forms.css">
 <link rel="stylesheet" href="/styles/auth.css">
+<script src="/styles/scripts/image-preview.js" defer></script>
 <body>
   <%- include("../../shared/includes/header.ejs") %>
 
     <main>
        <h1>Add new product</h1>
-       <%- include("./includes/product-form.ejs", { submitPath: "/admin/products", product: { title: "", summary: "", description: "" } }) %>
+       <%- include("./includes/product-form.ejs", { submitPath: "/admin/products", product: { title: "", summary: "", description: "", imageRequired: true } }) %>
  </main>
 <%- include("../../shared/includes/footer.ejs") %>

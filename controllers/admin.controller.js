@@ -35,8 +35,21 @@ res.render("admin/products/update-product", { product: product });
   
 }
 
-function updateProduct(){}
+async function updateProduct(req,res){
+  const product = new Product({...req.body, _id: req.params.id});
+  if (req.file){
+    product.replaceImage(req.file.filename);
+  }
 
+  try{
+  await product.save();
+}
+catch(error){
+  next(error);
+  return;
+}
+  res.redirect("/admin/products");
+}
 module.exports = {
     getProducts,
     getNewProductForm,
