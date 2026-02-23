@@ -69,6 +69,14 @@ await db.getDb().collection('products').updateOne({_id: productID}, {$set: produ
 replaceImage(newImage){
     this.image = newImage;
     this.updateImageData();
-}}
+}
+
+ remove(){
+    const productID = new mongodb.ObjectId(this.id);
+    return db.getDb().collection("products").deleteOne({_id: productID});
+}
+
+
+}
 
 module.exports = Product;
