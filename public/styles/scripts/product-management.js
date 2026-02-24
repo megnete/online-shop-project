@@ -1,0 +1,1 @@
+const deleteProductButtonElements = document.querySelectorAll('.delete-product-button');
