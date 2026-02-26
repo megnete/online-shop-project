@@ -10,6 +10,7 @@ const csrf = require('csurf');
 const expressSession = require("express-session");
 const authRoutes = require("./routes/auth.routes");
 const checkAuth = require("./middlewares/check-auth");
+const protectAdminRoutes = require("./middlewares/protect-admin-routes");
 const productsRoutes = require("./routes/products.routes");
 const baseRoutes = require("./routes/base.routes");
 const adminRoutes = require("./routes/admin.routes")
@@ -37,6 +38,7 @@ app.use(checkAuth);
 app.use(authRoutes);
 app.use(productsRoutes);
 app.use(baseRoutes);  
+app.use(protectAdminRoutes);
 app.use("/admin", adminRoutes);
 
 /* ---------- error handling ---------- */
