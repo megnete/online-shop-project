@@ -1,72 +1,74 @@
 const Product = require("../models/product.model");
-const { get } = require("../routes/admin.routes");
 
-
-async function getProducts(req, res,next) {
+async function getProducts(req, res, next) {
   try {
-  const products = await Product.findAll();
-  res.render("admin/products/all-products", { products: products });
-}
-catch(error){
-  next(error);
-  return;
-}
-}
-
-async function createNewProduct(req, res) {
-  console.log(req.body);
-  console.log(req.file);
-  const product = new Product({...req.body, image: req.file.filename});
-  try {
-  await product.save();}
-  catch(error){
+    const products = await Product.findAll();
+    res.render("admin/products/all-products", { products });
+  } catch (error) {
     next(error);
   }
-  res.redirect("/admin/products");
 }
 
-function getUpdateProduct(req, res,) {
-  try{
-const product = Product.findById(req.params.id);
-res.render("admin/products/update-product", { product: product });
-  }catch(error){
+function getNewProductForm(req, res) {
+  res.render("admin/products/new-product");
+}
+
+async function createNewProduct(req, res, next) {
+  try {
+    const product = new Product({
+      ...req.body,
+      image: req.file ? req.file.filename : null
+    });
+
+    await product.save();
+    res.redirect("/admin/products");
+  } catch (error) {
     next(error);
   }
-  
 }
 
-async function updateProduct(req,res){
-  const product = new Product({...req.body, _id: req.params.id});
-  if (req.file){
-    product.replaceImage(req.file.filename);
+async function getUpdateProduct(req, res, next) {
+  try {
+    const product = await Product.findById(req.params.id);
+    res.render("admin/products/update-product", { product });
+  } catch (error) {
+    next(error);
   }
-
-  try{
-  await product.save();
-}
-catch(error){
-  next(error);
-  return;
-}
-  res.redirect("/admin/products");
 }
 
-async function deleteProduct(req, res,next) {
-  let product;
-  try{
-  product = await Product.findById(req.params.id);
-  await product.remove();
+async function updateProduct(req, res, next) {
+  try {
+    const product = new Product({
+      ...req.body,
+      _id: req.params.id
+    });
+
+    if (req.file) {
+      product.replaceImage(req.file.filename);
+    }
+
+    await product.save();
+    res.redirect("/admin/products");
+  } catch (error) {
+    next(error);
+  }
 }
-catch(error){
-  next(error);
+
+async function deleteProduct(req, res, next) {
+  try {
+    const product = await Product.findById(req.params.id);
+    await product.remove();
+    res.json({ message: "Deleted product!" });
+  } catch (error) {
+    next(error);
+  }
 }
-  res.json({message: "Deleted product!"});
-}
+
 module.exports = {
-    getProducts,
-    getNewProductForm,
-    createNewProduct,
-    getUpdateProduct,
-    updateProduct,
-    deleteProduct
+  getProducts,
+  getNewProductForm,
+  createNewProduct,
+  getUpdateProduct,
+  updateProduct,
+  deleteProduct
 };
