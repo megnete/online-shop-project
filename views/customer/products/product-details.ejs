@@ -1,0 +1,22 @@
+<%- include("../../shared/includes/head.ejs", { pageTitle: "All Products" }) %>
+<link rel="stylesheet" href="/styles/forms.css">
+<link rel="stylesheet" href="/styles/auth.css">
+<link rel="stylesheet" href="/styles/products.css">
+</head>
+<body>
+  <%- include("../../shared/includes/header.ejs") %>
+
+    <main id="product-details">
+        <header>
+            <img src="/images/<%= product.imageURL %>" alt="Products header image">
+            <div id="product-info">
+                <h1><%= product.name %></h1>
+                <p>Product price: $<%= product.price %></p>
+                <button>Add to cart</button>
+            </div>
+        </header>
+        <p id="product-description"><%= product.description %></p>
+ </main>
+<%- include("../../shared/includes/footer.ejs") %>
+
+
