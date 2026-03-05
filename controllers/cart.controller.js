@@ -1,5 +1,19 @@
-function addCartItem(req, res) {
-    res.locals.cart.addItem(req.body.productId);
+const Product = require("../models/product.model");
+
+async function addCartItem(req, res) {
+    let product;
+    try{
+    product = await Product.findById(req.body.productId);   
+} catch (error) {
+   next(error);
+   return;
+}
+const cart = res.locals.cart;   
+ res.locals.cart.addItem(product);
+ req.session.cart = cart;
+
+ res.status(201).json({ message: "Item added to cart" });
+ newTotalItems = cart.totalQuantity;
 }
 
     module.exports = {
