@@ -1,7 +1,8 @@
-<%- include("../../shared/includes/head.ejs", { pageTitle: "All Products" }) %>
+<%- include("../../shared/includes/head.ejs", { pageTitle: product.title }) %>
 <link rel="stylesheet" href="/styles/forms.css">
 <link rel="stylesheet" href="/styles/auth.css">
 <link rel="stylesheet" href="/styles/products.css">
+<script src="/styles/scripts/cart-management.js"></script>
 </head>
 <body>
   <%- include("../../shared/includes/header.ejs") %>
@@ -12,7 +13,7 @@
             <div id="product-info">
                 <h1><%= product.name %></h1>
                 <p>Product price: $<%= product.price %></p>
-                <button>Add to cart</button>
+                <button class="btn" data-productid="<%= product.id %>" data-csrf="locals.csrfToken">Add to cart</button>
             </div>
         </header>
         <p id="product-description"><%= product.description %></p>
