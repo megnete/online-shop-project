@@ -1,3 +1,5 @@
+const { updateProduct } = require("../controllers/admin.controller");
+
 class Cart {
     constructor(items = [], totalQuantity = 0, totalPrice = 0) {
         this.items = items;
@@ -28,6 +30,28 @@ class Cart {
         this.totalQuantity += cartItem.quantity;
         this.totalPrice += cartItem.totalPrice;
     }
-}
+
+    updateItem(productId, newQuantity) {
+         for (let i = 0; i < this.items.length; i++) {
+            const item = this.items[i];
+            if (item.product.id === product.id && newQuantity > 0) {
+                const cartItem = {...item};
+                const quantityChange = newQuantity - item.quantity;
+                cartItem.quantity = newQuantity;
+                cartItem.totalPrice = newQuantity * product.price; // ✓ fixed
+                this.items[i] = cartItem;
+
+                this.totalQuantity = this.totalQuantity + quantityChange;
+                this.totalPrice += quantityChange * product.price;
+                return {updatedItemPrice: cartItem.totalPrice};
+            }
+            else if (item.product.id === product.id && newQuantity === 0) {
+                this.items.splice(i, 1);
+                this.totalQuantity = this.totalQuantity - item.quantity;
+                this.totalPrice -= item.totalPrice;
+                return {updatedItemPrice: 0};
+            }
+        }
+    }
 
 module.exports = Cart;
