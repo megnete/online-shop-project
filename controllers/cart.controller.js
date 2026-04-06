@@ -1,36 +1,51 @@
-const Product = require("../models/product.model");
+const Product = require('../models/product.model');
 
-function getCart(req, res) {
-    res.render("customer/cart/cart");
-
-async function addCartItem(req, res) {
-    let product;
-    try{
-    product = await Product.findById(req.body.productId);   
-} catch (error) {
-   next(error);
-   return;
+async function getCart(req, res) {
+  res.render('customer/cart/cart');
 }
-const cart = res.locals.cart;   
- res.locals.cart.addItem(product);
- req.session.cart = cart;
 
- res.status(201).json({ message: "Item added to cart" });
- newTotalItems = cart.totalQuantity;
+async function addCartItem(req, res, next) {
+  let product;
+  try {
+    product = await Product.findById(req.body.productId);
+  } catch (error) {
+    next(error);
+    return;
+  }
+
+  const cart = res.locals.cart;
+
+  cart.addItem(product);
+  req.session.cart = cart;
+
+  res.status(201).json({
+    message: 'Cart updated!',
+    newTotalItems: cart.totalQuantity,
+  });
 }
 
 function updateCartItem(req, res) {
-const cart = res.locals.cart;
+  const cart = res.locals.cart;
 
-const updatedItemData = cart.updateItem(req.body.productId, +req.body.quantity);
-req.session.cart = cart;
+  const updatedItemData = cart.updateItem(
+    req.body.productId,
+    +req.body.quantity
+  );
 
-res.json({ message: "Cart item updated", updatedCartData: { newTotalQuantity: cart.totalQuantity, newTotalPrice: cart.totalPrice, updatedItemPrice: updatedItemData.updatedItemPrice } });
+  req.session.cart = cart;
+
+  res.json({
+    message: 'Item updated!',
+    updatedCartData: {
+      newTotalQuantity: cart.totalQuantity,
+      newTotalPrice: cart.totalPrice,
+      updatedItemPrice: updatedItemData.updatedItemPrice,
+    },
+  });
 }
 
-
-    module.exports = {
-    addCartItem,
-    getCart,
-    updateCartItem
-}
+module.exports = {
+  addCartItem: addCartItem,
+  getCart: getCart,
+  updateCartItem: updateCartItem,
+};

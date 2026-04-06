@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const mongodb = require('mongodb');
 
 const db = require('../data/database');
 // const { get } = require('../routes/auth.routes'); // <- this looks unused; can remove
@@ -13,6 +14,12 @@ class User {
       postalCode: postal,
       city: city,
     };
+  }
+
+static findById(userID) {
+    const uid = new mongodb.ObjectId(userID);
+
+    return db.getDb().collection('users').findOne({ _id: uid }, { projection: { password: 0 } });
   }
 
   getUserWithSameEmail() {
